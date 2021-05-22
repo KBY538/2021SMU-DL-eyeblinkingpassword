@@ -19,17 +19,8 @@ class Game:
         pg.display.set_icon(pg.image.load('images/icon.png'))      #set icon
 
         self.blink_event = pg.event.Event(pg.USEREVENT)
-        
         self.load_data()
-
         self.clock = pg.time.Clock()
-        self.start_tick = 0
-        self.game_tick = 0
-
-        self.blink_index = 0
-        self.blink_sign = list()
-        self.blink_action = 0
-
         self.playing = False
         self.start = True
         self.practice = True
@@ -40,10 +31,14 @@ class Game:
         self.ending = False
 
         self.hit_count = 0
+        self.blink_sign = list()
         self.blink_data = list()     # data list
+        self.blink_index = 0
         self.blink_dataLen = 0       # data len
+        self.blink_action = 0
+        self.game_tick = 0
         
-        self.vs = VideoStream(self, device=0, model=self.CNN).start()
+        self.vs = VideoStream(self, device=0+cv2.CAP_DSHOW, model=self.CNN).start()
 
         self.all_sprites = pg.sprite.Group()
         self.blinks = pg.sprite.Group() # 깜빡임 지시자 sprite 그룹 생성
@@ -95,10 +90,10 @@ class Game:
         #game loop - events
         for event in pg.event.get():
             if event.type == pg.USEREVENT:
-                if self.blink_action < self.blink_dataLen-1:
+                if self.blink_action < len(self.blink_sign):
                     position_of_bar =  self.blink_sign[self.blink_action].rect.x
                     print(position_of_bar)
-                    if position_of_bar >= (WIDTH/2-15) and position_of_bar <= (WIDTH/2+15):
+                    if position_of_bar >= (WIDTH/2-20) and position_of_bar <= (WIDTH/2+20):
                         self.hit_count += 1
                         print('hit!')
                         self.blink_sign[self.blink_action].correct = 1
@@ -384,5 +379,3 @@ while g.start:
                     g.ending_screen()
                 else:
                     g.fail_screen()
-                
-    cv2.destroyAllWindows()

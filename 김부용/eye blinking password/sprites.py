@@ -38,14 +38,14 @@ class Select(pg.sprite.Sprite):
         if keys[pg.K_z] and self.select_number == 0:
             self.game.decision_sound.play()
             self.game.start_playing = False
-            self.game.practice = True
             self.game.playing = True
+            self.game.practice = True
 
         if keys[pg.K_z] and self.select_number == 1:
             self.game.decision_sound.play()
             self.game.start_playing = False
-            self.game.practice = False
             self.game.playing = True
+            self.game.practice = False
 
         if keys[pg.K_z] and self.select_number == 2:
             self.game.exit_sound.play()

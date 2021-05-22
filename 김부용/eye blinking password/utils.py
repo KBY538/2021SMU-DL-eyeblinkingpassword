@@ -43,7 +43,7 @@ class VideoStream:
             self.model._make_predict_function() # 초기화
         
         self.game = game
-        self.stream = cv2.VideoCapture(cv2.CAP_ANY)
+        self.stream = cv2.VideoCapture(device)
         self.stream.set(cv2.CAP_PROP_FPS, 10)
         self.stopped = False
         self.queue = Queue(maxsize=size)
